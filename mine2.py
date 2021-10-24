@@ -2,8 +2,8 @@ import pygame
 pygame.init()
 import random
 pygame.mixer.init()
-pygame.mixer.music.load("C:\\Users\\Dell\\Downloads\\back.mp3.mp3")
-pygame.mixer.music.play()
+import  os
+
 
 white = (255, 255, 255)
 red = (255, 0, 0)
@@ -16,7 +16,8 @@ def textscreen(text, color, x, y):
     gamewindow.blit(screentext,[x,y])
 def plot_snake(gameWindow, color, snk_list, snake_size):
     for x,y in snk_list:
-        pygame.draw.rect(gameWindow, color, [x, y, snake_size, snake_size])
+        pygame.draw.rect(gameWindow, color, [x,y, snake_size, snake_size])
+
 clock = pygame.time.Clock()
 screen_height = 600
 screen_width = 900
@@ -31,6 +32,8 @@ goimg = pygame.transform.scale(bgimg,(screen_width,screen_height)).convert_alpha
 
 
 def welcome():
+    pygame.mixer.music.load("C:\\Users\\Dell\\Downloads\\back.mp3.mp3")
+    pygame.mixer.music.play()
     exit_game = False
     while not exit_game:
         gamewindow.fill(purple)
@@ -49,6 +52,9 @@ def welcome():
 
 
 def gameloop():
+    pygame.mixer.music.load("C:\\Users\\Dell\\Downloads\\back.mp3.mp3")
+    pygame.mixer.music.play()
+
     exit_game = False
     game_over = False
     snake_x = 45
@@ -58,21 +64,25 @@ def gameloop():
     snk_list = []
     snk_length = 1
 
-    food_x = random.randint(20, screen_width / 2)
-    food_y = random.randint(20, screen_height / 2)
+    food_x = random.randint(25, screen_width / 2)
+    food_y = random.randint(25, screen_height / 2)
     score = 0
     init_velocity = 5
     snake_size = 15
     fps = 60
+    if (not os.path.exists ("hiscore.txt")):
+        with open("hiscore.txt","w") as f:
+            f.write("0")
+    with open("hiscore.txt", "r") as f:
+        hiscore = f.read()
     while not exit_game:
-
         if game_over:
+            with open("hiscore.txt", "w") as f:
+                f.write(str(hiscore))
+
             gamewindow.fill(white)
             gamewindow.blit(goimg,(0,0))
             textscreen("Game Over! Press Enter To Continue", red, 100, 250)
-
-
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit_game = True
@@ -108,14 +118,16 @@ def gameloop():
             snake_y = snake_y + velocity_y
 
             if abs(snake_x - food_x) < 6 and abs(snake_y - food_y) < 6:
-                score += 1
+                score += 10
                 food_x = random.randint(20, screen_width / 2)
                 food_y = random.randint(20, screen_height / 2)
                 snk_length += 5
+                if score > int(hiscore):
+                    hiscore = score
 
             gamewindow.fill(white)
             gamewindow.blit(bgimg,(0,0))
-            textscreen("Score: " + str(score * 10), red, 5, 5)
+            textscreen("Score: " + str(score) + "   HISCORE: " + str(hiscore), red, 5, 5)
             pygame.draw.rect(gamewindow, red, [food_x, food_y, snake_size, snake_size])
 
             head = []
@@ -134,9 +146,10 @@ def gameloop():
 
             if snake_x < 0 or snake_x > screen_width or snake_y < 0 or snake_y > screen_height:
                 game_over = True
+                gamewindow.blit(goimg, (0, 0))
                 pygame.mixer.music.load("C:\\Users\\Dell\\Downloads\\mixkit-arcade-retro-game-over-213.wav")
                 pygame.mixer.music.play()
-                gamewindow.blit(goimg, (0, 0))
+
             plot_snake(gamewindow, black, snk_list, snake_size)
         pygame.display.update()
         clock.tick(fps)
