@@ -2,6 +2,8 @@
 
 A desktop application for school staff to generate question papers from saved exam patterns. Users can create papers for a class, exam type, and subject using handwritten-question photos or AI-generated questions based on a syllabus. The workflow supports local-first operation through Ollama, with optional Google Gemini integration for cloud-based generation.
 
+> **Repository status:** this GitHub snapshot is currently incomplete. The top-level `app.py` imports a `core/` package, but that package and the documented `requirements.txt` are not present in this repository snapshot. A fresh clone will therefore not run yet. Restore the missing source modules and dependency file before using the setup instructions below; I have not fabricated replacement modules.
+
 ## What it uses (all free by default)
 
 | Job | Tool | Notes |
