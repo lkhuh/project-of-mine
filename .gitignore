@@ -13,5 +13,5 @@ venv/
 config.local.json
 
 # Generated output and local data
- data/output/
+data/output/
 data/templates/
