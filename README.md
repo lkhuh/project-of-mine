@@ -1,12 +1,6 @@
 # School Question Paper Generator (Offline-First, Free)
 
-A desktop app for your father's school: learn a question-paper pattern once
-from sample papers, then generate new papers for a class + exam type +
-subject — either from a photo of handwritten questions, or by having AI
-write original questions from the syllabus. Runs fully offline by default
-(free local AI via Ollama); optionally you can switch to Google's Gemini
-cloud API in Settings for more accurate questions (needs internet + a free
-API key).
+A desktop application for school staff to generate question papers from saved exam patterns. Users can create papers for a class, exam type, and subject using handwritten-question photos or AI-generated questions based on a syllabus. The workflow supports local-first operation through Ollama, with optional Google Gemini integration for cloud-based generation.
 
 ## What it uses (all free by default)
 
